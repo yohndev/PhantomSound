@@ -13,7 +13,7 @@ class PhantomEngine():
         )
 
     
-    def run():
+    def run(self, ):
         cap = cv2.VideoCapture(0)
         
         while cap.isOpened():
@@ -29,8 +29,18 @@ class PhantomEngine():
                     thumb = hand_landmarks.landmark[4]
                     index = hand_landmarks.landmark[8]
 
+                    dist = np.hypot(thumb.x - index.x, thumb.y - index.y)
+                    
+                    hand_y = index.y 
+
+                    controller_callback(hand_y, dist)
+
+            cv2.imshow('PhantomSound - Vision Debug', image)
+
+
 
             if cv2.waitKey(5) & 0xFF == 27:
                 break 
 
         cap.release()
+        cv2.destroyAllWindows()
